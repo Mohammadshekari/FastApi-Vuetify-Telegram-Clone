@@ -2,7 +2,8 @@
 .material-icons, .material-icons-outlined, .material-icons-round, .material-icons-sharp, .material-icons-two-tone, .mdi, .mdi-outlined, .mdi-round, .mdi-sharp, .mdi-two-tone {
     line-height: .5;
 }
-.v-data-table .v-table__wrapper>table tbody>tr>th:not(.v-data-table__th--sorted) .v-data-table-header__sort-icon, .v-data-table .v-table__wrapper>table>thead>tr>th:not(.v-data-table__th--sorted) .v-data-table-header__sort-icon{
+
+.v-data-table .v-table__wrapper > table tbody > tr > th:not(.v-data-table__th--sorted) .v-data-table-header__sort-icon, .v-data-table .v-table__wrapper > table > thead > tr > th:not(.v-data-table__th--sorted) .v-data-table-header__sort-icon {
     display: none;
 }
 
@@ -25,12 +26,22 @@
 .mdi-minus-box:before {
     content: "\e909";
 }
+
 .mdi-arrow-up:before {
     content: "\e5c7";
 }
+
 .mdi-arrow-down:before {
     content: "\e5c5";
 }
-.v-navigation-drawer--left{
+
+.v-navigation-drawer--left {
     border: none;
+}
+.account-checked-badge .v-badge__badge{
+    width: 14px;
+    min-width: 14px;
+    height: 14px;
+    padding: 4px;
+    outline: 2px solid white;
 }
