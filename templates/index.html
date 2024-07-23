@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Todo App with FastApi & Vuetify</title>
+	<meta name="author" content="BadiDesign Mohammad Shekari">
+	<link rel="stylesheet" href="static/css/material-icons.min.css">
+	<link rel="stylesheet" href="static/css/vuetify.min.css">
+	<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+<div id="app">
+	<v-responsive>
+		<v-app :theme="theme" scroll-behavior="hide collapse elevate">
+			<v-layout>
+				<v-navigation-drawer v-model="drawer" temporary>
+					<v-card class="rounded-0 bg-blue" variant="text">
+						<v-card-text>
+							<div class="d-flex justify-space-between">
+								<v-avatar size="x-large">
+									<v-img alt="John" src="/static/media/user.png"></v-img>
+								</v-avatar>
+								<v-btn variant="text"
+									   :icon="theme !== 'light' ? 'mdi-wb-sunny' : 'mdi-nights-stay'"
+									   @click="toggleTheme"
+								></v-btn>
+							</div>
+						</v-card-text>
+						<v-card-text class="pt-0 pb-2">
+							<p class="text-white">
+								Mohammad Shekari Badi
+							</p>
+							<p class="text-blue-lighten-5 mb-0 text-caption font-weight-light">
+								+98 939 044 4542
+							</p>
+						</v-card-text>
+					</v-card>
+					<v-card class="rounded-0 mt-2" variant="0" @click="">
+						<v-card-text class="px-3 py-1">
+							<v-avatar size="small" class="mr-2 mb-1">
+								<v-img alt="John" src="/static/media/user.png"></v-img>
+							</v-avatar>
+							<span class="text-subtitle-caption">Mohammad Shekari Badi</span>
+						</v-card-text>
+					</v-card>
+					<v-card class="rounded-0 mb-2" variant="0" @click="">
+						<v-card-text class="px-3 py-1">
+							<v-avatar size="small" class="mr-2">
+								<v-icon color="grey" size="large" class="mb-1" icon="mdi-add"></v-icon>
+							</v-avatar>
+							<span class="text-subtitle-caption">Add Account</span>
+						</v-card-text>
+					</v-card>
+					<v-divider></v-divider>
+					<v-card class="rounded-0 my-1" variant="0" @click="">
+						<v-card-text class="px-3 py-2">
+							<div>
+								<v-avatar size="small" class="mr-2">
+									<v-icon color="grey" size="large" class="mb-1"
+											icon="mdi-outlined mdi-account-circle"></v-icon>
+								</v-avatar>
+								<span class="text-subtitle-caption">My Profile</span>
+							</div>
+						</v-card-text>
+					</v-card>
+					<v-divider></v-divider>
+					<v-card class="rounded-0 mt-1" variant="0" @click="">
+						<v-card-text class="px-3 py-2">
+							<div>
+								<v-avatar size="small" class="mr-2">
+									<v-icon color="grey" size="large" class="mb-1"
+											icon="mdi-outlined mdi-bookmark"></v-icon>
+								</v-avatar>
+								<span class="text-subtitle-caption">Saved Messages</span>
+							</div>
+						</v-card-text>
+					</v-card>
+					<v-card class="rounded-0 mt-1" variant="0" @click="">
+						<v-card-text class="px-3 py-2">
+							<div>
+								<v-avatar size="small" class="mr-2">
+									<v-icon color="grey" size="large" class="mb-1"
+											icon="mdi-outlined mdi-info"></v-icon>
+								</v-avatar>
+								<span class="text-subtitle-caption">Telegram Info</span>
+							</div>
+						</v-card-text>
+					</v-card>
+				</v-navigation-drawer>
+				<v-app-bar
+						color="blue"
+						prominent>
+					<v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+					<v-toolbar-title>My files</v-toolbar-title>
+					<v-spacer></v-spacer>
+					<template v-if="$vuetify.display.mdAndUp">
+						<v-btn icon="mdi-magnify" variant="text"></v-btn>
+
+						<v-btn icon="mdi-filter" variant="text"></v-btn>
+					</template>
+
+					<v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
+				</v-app-bar>
+				<v-main style="height: 500px;">
+					<v-card-text>
+						The navigation drawer will appear from the bottom on smaller size screens.
+					</v-card-text>
+				</v-main>
+			</v-layout>
+		</v-app>
+	</v-responsive>
+</div>
+
+<script type="text/x-template" id="home-template">
+</script>
+
+<script src="static/js/vue.global.js"></script>
+<script src="static/js/vuetify.min.js"></script>
+<script setup>
+    const {createApp, ref} = Vue
+    const {createVuetify} = Vuetify
+    const vuetify = createVuetify()
+    const app = createApp({
+        setup() {
+            const drawer = ref(false)
+            const group = ref(null)
+            const theme = ref('light')
+            const items = ref([
+                {
+                    title: 'Foo',
+                    value: 'foo',
+                },
+                {
+                    title: 'Bar',
+                    value: 'bar',
+                },
+                {
+                    title: 'Fizz',
+                    value: 'fizz',
+                },
+                {
+                    title: 'Buzz',
+                    value: 'buzz',
+                },
+            ])
+
+            function toggleTheme() {
+                theme.value = theme.value === 'light' ? 'dark' : 'light'
+            }
+
+            return {
+                drawer,
+                group,
+                items,
+                toggleTheme,
+                theme,
+            }
+        },
+    })
+</script>
+<script src="static/vue/ChatSidebar.js"></script>
+<script src="static/vue/ChatWindow.js"></script>
+<script src="static/vue/MessageInput.js"></script>
+<script src="static/vue/Home.js"></script>
+<script setup>
+    app.use(vuetify).mount('#app')
+</script>
+</body>
+</html>
