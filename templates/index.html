@@ -36,9 +36,9 @@
 </div>
 
 <script type="text/x-template" id="home-template">
+
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
 
 <script src="/static/js/vue.global.js"></script>
 <script src="/static/js/vuex.global.js"></script>
@@ -52,17 +52,12 @@
         setup() {
             const group = ref(null)
 
-            function toggleTheme(th) {
-                store.commit('setTheme', th)
-            }
-
             function toggleDrawer(th) {
                 store.commit('setDrawer', !this.drawer)
             }
 
             return {
                 group,
-                toggleTheme,
                 toggleDrawer,
             }
         },
@@ -73,13 +68,12 @@
         },
     })
 </script>
-<script src="/static/vue/ChatWindow.js"></script>
+<script src="/static/vue/ChatList.js"></script>
 <script src="/static/vue/MessageInput.js"></script>
 <script src="/static/vue/Home.js"></script>
 <script src="/static/vue/DrawerPanel.js"></script>
 <script setup>
     app.use(vuetify).use(vuex).mount('#app')
-    console.log(app.$store)
 </script>
 </body>
 </html>

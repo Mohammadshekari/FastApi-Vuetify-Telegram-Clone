@@ -1,25 +1,6 @@
 app.component('DrawerPanel', {
     emits: ['toggleTheme', 'openDrawer'],
     setup() {
-        const group = ref(null)
-        const items = ref([
-            {
-                title: 'Foo',
-                value: 'foo',
-            },
-            {
-                title: 'Bar',
-                value: 'bar',
-            },
-            {
-                title: 'Fizz',
-                value: 'fizz',
-            },
-            {
-                title: 'Buzz',
-                value: 'buzz',
-            },
-        ])
 
         const showAccounts = ref(true)
 
@@ -28,7 +9,7 @@ app.component('DrawerPanel', {
         }
 
         function toggleTheme() {
-            store.commit('setTheme', this.theme.value = this.theme.value === 'light' ? 'dark' : 'light')
+            store.commit('setTheme', store.state.theme === 'light' ? 'dark' : 'light')
         }
 
         function toggleDrawer() {
@@ -39,8 +20,6 @@ app.component('DrawerPanel', {
 
         return {
             myDrawer,
-            group,
-            items,
             showAccounts,
             toggleShowAccount,
             toggleTheme,
