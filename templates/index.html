@@ -12,6 +12,10 @@
 </head>
 <body>
 <div id="app">
+	<router-view></router-view>
+</div>
+
+<script type="text/x-template" id="home-template">
 	<v-responsive>
 		<v-app :theme="theme" scroll-behavior="hide collapse elevate">
 			<drawer-panel></drawer-panel>
@@ -31,21 +35,100 @@
 				<v-btn icon="mdi-search" variant="text"></v-btn>
 			</v-app-bar>
 			<v-fab color="primary" app static size="large" icon="mdi mdi-create"></v-fab>
+			<router-link class="p-2 bg-pink" to="/login_to_app">Go to About</router-link>
 		</v-app>
 	</v-responsive>
-</div>
+</script>
 
-<script type="text/x-template" id="home-template">
-
+<script type="text/x-template" id="login-template">
+	<v-container fluid class="py-0 position-relative">
+		<v-row class="ma-0 pa-0" align="center" justify="center" style="height: 95vh;">
+			<v-col cols="12" md="4">
+				<v-img src="/static/gif/login.gif" class="mb-5"></v-img>
+				<v-card variant="0" class="mb-5">
+					<v-card-title class="text-h6 text-center font-weight-bold">Your Phone number</v-card-title>
+					<v-card-subtitle class="text-center mb-5">
+						Please confirm your phone number
+					</v-card-subtitle>
+					<v-card-text class="mb-5">
+						<v-form ref="form" v-model="valid">
+							<v-text-field
+									v-model="phone"
+									label="Phone number"
+									:rules="phoneRules"
+									variant="outlined"
+									required
+							></v-text-field>
+						</v-form>
+					</v-card-text>
+				</v-card>
+			</v-col>
+		</v-row>
+		<v-fab color="primary"
+			   @click="login"
+			   location="bottom end"
+			   class="ms-4 mb-4"
+			   absolute
+			   icon="mdi-keyboard-arrow-right">
+		</v-fab>
+	</v-container>
 </script>
 
 
 <script src="/static/js/vue.global.js"></script>
 <script src="/static/js/vuex.global.js"></script>
 <script src="/static/js/vuetify.min.js"></script>
+<script src="/static/js/vue-router.js"></script>
 <script src="/static/vue/Store.js"></script>
 <script setup>
     const {createApp, ref} = Vue
+    const {createMemoryHistory, createRouter} = VueRouter
+
+    const Foo = {template: `#home-template`}
+    const Bar = {
+        template: `#login-template`,
+        setup() {
+            const phone = ref('')
+            const password = ref('')
+            const valid = ref(false)
+            const showPassword = ref(false)
+            const phoneRules = ref([
+                v => !!v || 'Phone is required',
+                v => v.startsWith('09') || 'Phone starts with 09xxx',
+                v => v.length === 11 || 'Phone should be 11 numbers',
+            ])
+            const passwordRules = ref([
+                v => !!v || 'Password is required',
+                v => v.length >= 6 || 'Password must be at least 6 characters long',
+            ])
+            const login = () => {
+                if (this.$refs.form.validate()) {
+                    // Handle login logic here
+                    alert('Logging in...');
+                }
+            }
+            return {
+                login,
+                phone,
+                password,
+                valid,
+                showPassword,
+                phoneRules,
+                passwordRules,
+            };
+        }
+    }
+
+    const routes = [
+        {path: '/', component: Foo},
+        {path: '/login', component: Bar},
+    ]
+
+    const router = createRouter({
+        history: createMemoryHistory(),
+        routes,
+    })
+
     const {createVuetify} = Vuetify
     const vuetify = createVuetify()
     const app = createApp({
@@ -73,7 +156,10 @@
 <script src="/static/vue/Home.js"></script>
 <script src="/static/vue/DrawerPanel.js"></script>
 <script setup>
-    app.use(vuetify).use(vuex).mount('#app')
+    app.use(router).use(vuetify).use(vuex).mount('#app')
+    if (!localStorage.getItem('session')) {
+        router.push('/login')
+    }
 </script>
 </body>
 </html>
