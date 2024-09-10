@@ -11,12 +11,12 @@ from db import db_user
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
-SECRET_KEY = os.getenv('SECRET_KEY')
 ALGORITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+    from main import SECRET_KEY
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
@@ -35,12 +35,12 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("username")
-        if username is None:
+        phone_number: str = payload.get("phone_number")
+        if phone_number is None:
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-    user = db_user.get_user_by_username(db, username=username)
+    user = db_user.get_user_by_phone_number(db, phone_number=phone_number)
     if user is None:
         raise credentials_exception
     return user

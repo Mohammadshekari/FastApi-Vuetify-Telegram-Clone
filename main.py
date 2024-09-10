@@ -17,6 +17,7 @@ from pydantic import BaseModel
 from typing import List
 
 load_dotenv('.env')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 app = FastAPI()
 app.include_router(authentication.router)

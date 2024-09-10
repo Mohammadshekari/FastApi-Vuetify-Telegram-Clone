@@ -1,7 +1,14 @@
 from sqlalchemy.orm import relationship
 
 from db.database import Base
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text, Boolean, Table
+
+chat_users = Table(
+    'chat_users',
+    Base.metadata,
+    Column('user_id', Integer, ForeignKey('users.id'), primary_key=True),
+    Column('chat_id', Integer, ForeignKey('chats.id'), primary_key=True)
+)
 
 
 class DbUser(Base):
@@ -11,7 +18,7 @@ class DbUser(Base):
     phone_number = Column(String, unique=True)
     created_at = Column(DateTime)
     # password = Column(String)
-    chats = relationship('DbPost', back_populates='user')
+    chats = relationship('DbChat', secondary=chat_users, back_populates='users')
 
 
 class DbChat(Base):
@@ -22,8 +29,8 @@ class DbChat(Base):
     text = Column(Text(1000))
     created_at = Column(DateTime)
     is_group = Column(Boolean)
-    users = relationship('DbUser', secondary='chat_users', back_populates='chats')
-    messages = relationship('DbComment', back_populates='chat')
+    users = relationship('DbUser', secondary=chat_users, back_populates='chats')
+    messages = relationship('DbMessage', back_populates='chat')
 
 
 class DbMessage(Base):

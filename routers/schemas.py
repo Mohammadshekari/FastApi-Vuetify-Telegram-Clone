@@ -37,7 +37,7 @@ class ChatDisplay(BaseModel):
     image_url_type: str
     caption: str
     created_at: datetime.datetime
-    user: ChatUser
+    users: List[ChatUser]
     comments: List[ChatMessage]
 
 

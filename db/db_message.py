@@ -10,7 +10,7 @@ from routers.schemas import MessageBase, UserAuth
 
 def create_message(db: Session, message: MessageBase):
     new_message = DbMessage(
-        username=message.username,
+        fullname=message.fullname,
         text=message.text,
         created_at=datetime.datetime.now(),
         chat_id=message.chat_id

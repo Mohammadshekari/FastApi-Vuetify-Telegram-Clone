@@ -16,6 +16,11 @@ app.component('DrawerPanel', {
             console.log('WTF')
         }
 
+        function logout() {
+            store.commit('logout')
+        }
+
+
         const myDrawer = ref(false)
 
         return {
@@ -24,6 +29,7 @@ app.component('DrawerPanel', {
             toggleShowAccount,
             toggleTheme,
             toggleDrawer,
+            logout,
         }
     },
     computed: {
@@ -127,6 +133,17 @@ app.component('DrawerPanel', {
 				</v-card-text>
 			</v-card>
 			<v-card class="rounded-0 mt-1" variant="text" @click="">
+				<v-card-text class="px-3 py-2">
+					<div>
+						<v-avatar size="small" class="mr-2">
+							<v-icon color="grey" size="large" class="mb-1"
+									icon="mdi-outlined mdi-info"></v-icon>
+						</v-avatar>
+						<span class="text-subtitle-caption">Telegram Info</span>
+					</div>
+				</v-card-text>
+			</v-card>
+			<v-card class="rounded-0 mt-1" variant="text" @click="logout()">
 				<v-card-text class="px-3 py-2">
 					<div>
 						<v-avatar size="small" class="mr-2">
